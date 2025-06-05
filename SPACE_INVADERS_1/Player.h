@@ -1,7 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-class Player {
+#include "GameObject.h"
+#include <iostream>
+
+class Player : public GameObject {
 public:
 	Player();
 	Player(const Player& obj);
