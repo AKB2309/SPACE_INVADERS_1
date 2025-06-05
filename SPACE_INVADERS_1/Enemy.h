@@ -12,6 +12,7 @@ public:
 	int getDirection() const;
 	void setDirection(int dir);
 
+
 	
 protected:
 	int direction;
