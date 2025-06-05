@@ -1,5 +1,6 @@
 #pragma once
-class Enemy
+#include "GameObject.h"
+class Enemy : public GameObject
 {
 public:
 	Enemy();
@@ -12,7 +13,9 @@ public:
 	int getDirection() const;
 	void setDirection(int dir);
 
-	
+	virtual void update();
+	virtual void render() const;
+
 protected:
 	int direction;
 };
