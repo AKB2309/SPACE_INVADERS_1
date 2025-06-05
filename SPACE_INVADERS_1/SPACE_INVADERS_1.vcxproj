@@ -135,6 +135,7 @@
     <ClCompile Include="EnemyType4.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="visualization.cpp" />
     <ClCompile Include="SPACE_INVADERS_1.cpp" />
   </ItemGroup>
   <ItemGroup>
