@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <iostream>
+using namespace std;
 
 void Game::initializeEnemies()
 {
@@ -33,6 +35,11 @@ void Game::update()
 
 void Game::checkCollisions()
 {
+	/*for (auto it = bullets.begin(); it != bullets.end();)
+	{
+		Bullet* bullet = *it;
+
+	}*/
 }
 
 void Game::render()
