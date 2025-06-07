@@ -8,7 +8,7 @@ protected:
 	COLORS color;
 
 public:
-	GameObject();
+	GameObject(int x = 0, int y = 0, char symbol = ' ', COLORS color = WHITE);	
 	GameObject(const GameObject& obj);
 	GameObject(GameObject&& obj);
 	virtual ~GameObject();

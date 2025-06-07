@@ -6,7 +6,7 @@
 
 class Player : public GameObject {
 public:
-	Player();
+	Player(int x = 0, int y = 0, char symbol = '^', COLORS color = GREEN);
 	Player(const Player& obj);
 	Player(Player&& obj);
 	~Player();

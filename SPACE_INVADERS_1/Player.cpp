@@ -1,6 +1,9 @@
 #include "Player.h"
 
-Player::Player() {}
+Player::Player(int x = 0, int y = 0, char symbol = '^', COLORS color = GREEN)
+{
+
+}
 Player::Player(const Player& obj) {}
 Player::Player(Player&& obj) {}
 Player::~Player() {}
@@ -9,9 +12,11 @@ Player& Player::operator=(const Player& obj) {
 
 }
 void Player::moveLeft() {
+	x += -1;
 
 }
 void Player::moveRight() {
+	x += +1;
 
 }
 void Player::shoot() {

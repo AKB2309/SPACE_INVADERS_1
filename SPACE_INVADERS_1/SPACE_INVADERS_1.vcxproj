@@ -137,7 +137,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="visualization.cpp" />
-    <ClCompile Include="SPACE_INVADERS_1.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />

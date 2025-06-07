@@ -1,1 +1,79 @@
 #include "GameObject.h"
+
+GameObject::GameObject(int x, int y, char symbol, COLORS color) : x(x), y(y), symbol(symbol), color(color)
+{
+}
+
+GameObject::GameObject(const GameObject& obj) :x(obj.x), y(obj.y), symbol(obj.symbol), color(obj.color)
+{
+}
+
+GameObject::GameObject(GameObject&& obj)
+{
+}
+
+GameObject::~GameObject()
+{
+}
+
+GameObject& GameObject::operator=(const GameObject& obj)
+{
+	if (this != &obj)
+	{
+		x = obj.x;
+		y = obj.y;
+		symbol = obj.symbol;
+		color = obj.color;
+	}
+	
+	return *this;
+	// TODO: insert return statement here
+}
+
+int GameObject::getX() const
+{
+	return x;
+}
+
+void GameObject::setX(int newX)
+{
+	x = newX;
+}
+
+int GameObject::getY() const
+{
+	return y;
+}
+
+void GameObject::setY(int newY)
+{
+	y = newY;
+}
+
+char GameObject::getSymbol() const
+{
+	return symbol;
+}
+
+void GameObject::setSymbol(char newSymbol)
+{
+	symbol = newSymbol;
+}
+
+COLORS GameObject::getColor() const
+{
+	return COLORS();
+}
+
+void GameObject::setColor(COLORS newColor)
+{
+}
+
+void GameObject::update()
+{
+}
+
+void GameObject::render() const
+{
+	draw_char(symbol, y, x, color, BLACK);
+}
