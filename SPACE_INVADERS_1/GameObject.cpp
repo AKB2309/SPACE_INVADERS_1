@@ -8,13 +8,13 @@ GameObject::GameObject(const GameObject& obj) :x(obj.x), y(obj.y), symbol(obj.sy
 {
 }
 
-GameObject::GameObject(GameObject&& obj)
+GameObject::GameObject(GameObject&& obj) noexcept : x(std::exchange(obj.x, 0)),
+y(std::exchange(obj.y, 0)),
+symbol(std::exchange(obj.symbol, ' ')),
+color(std::exchange(obj.color, WHITE))
 {
 }
 
-GameObject::~GameObject()
-{
-}
 
 GameObject& GameObject::operator=(const GameObject& obj)
 {
@@ -67,6 +67,12 @@ COLORS GameObject::getColor() const
 
 void GameObject::setColor(COLORS newColor)
 {
+	color = newColor;
+}
+
+bool GameObject::getActive() const
+{
+	return active;
 }
 
 void GameObject::update()

@@ -1,19 +1,31 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#pragma once
 
 #include "GameObject.h"
+#include "Bullet.h"
 #include <iostream>
 
+const int COOLDOWN = 15;
+
 class Player : public GameObject {
+
+protected:
+	int lives;
+	int score;
+	int shootCooldown = COOLDOWN;
+
 public:
 	Player(int x = 0, int y = 0, char symbol = '^', COLORS color = GREEN);
 	Player(const Player& obj);
-	Player(Player&& obj);
+	//Player(Player&& obj);
 	~Player();
+
 	Player& operator=(const Player& obj);
+
 	void moveLeft();
 	void moveRight();
-	void shoot();
+	Bullet* shoot();
+
+	void handleInput();
 
 	int getLives() const;
 	void setLives(int l);
@@ -21,14 +33,12 @@ public:
 	int getScore() const;
 	void setScore(int s);
 
+
 	Player& operator+();
 	Player& operator-();
-protected:
-	int lives;
-	int score;
-};
 
-#endif // !PLAYER_H
+	void update() override;
+};
 
 
 
