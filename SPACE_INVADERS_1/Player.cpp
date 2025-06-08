@@ -19,7 +19,7 @@ void Player::moveRight() {
 Bullet* Player::shoot() {
 	if (shootCooldown <= 0) {
 		shootCooldown = COOLDOWN;
-		return new Bullet(x, y+1, 1);
+		return new Bullet(x, y, 1);
 	}
 	else return nullptr;
 }
