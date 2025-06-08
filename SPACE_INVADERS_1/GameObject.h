@@ -1,18 +1,18 @@
 #pragma once
 #include "visualization.h"
 #include <iostream>
-#include <windows.h>  
+#include <windows.h>
 #include <utility>
 class GameObject
 {
 protected:
 	int x, y;
 	char symbol;
-	bool active = true;
+	bool active;
 	COLORS color;
 
 public:
-	GameObject(int x = 0, int y = 0, char symbol = ' ', COLORS color = WHITE);	
+	GameObject(int x = 0, int y = 0, char symbol = ' ', COLORS color = WHITE,bool active = true);	
 	GameObject(const GameObject& obj);
 	GameObject(GameObject&& obj) noexcept;
 	virtual ~GameObject() = default;
@@ -32,6 +32,7 @@ public:
 	void setColor(COLORS newColor);
 
 	virtual bool getActive() const;
+	virtual void setActive(bool active);
 
 	virtual void update();
 	virtual void render() const;

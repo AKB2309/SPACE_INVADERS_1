@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include "GameObject.h"
 #include "Bullet.h"
 #include <iostream>
 
-const int COOLDOWN = 15;
+const int COOLDOWN = 0;
 
 class Player : public GameObject {
 

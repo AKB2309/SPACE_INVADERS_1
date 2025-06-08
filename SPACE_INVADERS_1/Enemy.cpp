@@ -1,5 +1,5 @@
 #include "Enemy.h"
-/*
+
 Enemy::Enemy() {}
 Enemy::Enemy(const Enemy& obj){}
 Enemy::Enemy(Enemy&& obj) {}
@@ -22,4 +22,4 @@ void Enemy::update() {
 }
 void Enemy::render() const {
 
-}*/
+}
