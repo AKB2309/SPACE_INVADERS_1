@@ -6,4 +6,3 @@ public:
 	EnemyType1(int x, int y);
 	void update() override;
 };
-

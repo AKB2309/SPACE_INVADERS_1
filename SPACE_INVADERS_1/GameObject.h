@@ -3,6 +3,7 @@
 #include <iostream>
 #include <windows.h>  
 #include <utility>
+
 class GameObject
 {
 protected:
@@ -35,7 +36,5 @@ public:
 
 	virtual void update();
 	virtual void render() const;
-
-
 };
 
