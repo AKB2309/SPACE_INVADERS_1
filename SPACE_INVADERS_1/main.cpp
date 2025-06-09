@@ -10,6 +10,10 @@ int main() {
     Game game;
     game.run();
 
+    while (true)
+    {
+
+    }
     return 0;
 }
 

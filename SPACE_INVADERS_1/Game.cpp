@@ -12,7 +12,7 @@ void Game::checkBulletEnemyCollisions()
 			Bullet& bulletCast = dynamic_cast<Bullet&>(*bullet);
 			if (bulletCast.getIsPlayerBullet()) {
 
-				if (checkCollisionGameObjects(*bullet, *enemy))
+				if (checkCollisionGameObjects(*bullet, *enemy, 1))
 				{
 					bullet->setActive(false);
 					enemy->setActive(false);
@@ -44,10 +44,10 @@ void Game::checkBulletPlayerCollisions()
 	}
 }
 
-bool Game::checkCollisionGameObjects(GameObject& obj, GameObject& obj2)
+bool Game::checkCollisionGameObjects(GameObject& obj, GameObject& obj2, int range)
 {
-	if (abs(obj.getX() - obj2.getX()) <= 1 &&
-		abs(obj.getY() - obj2.getY()) <= 1 && obj.getActive() && obj2.getActive()) return true;
+	if (abs(obj.getX() - obj2.getX()) <= range &&
+		obj.getY() == obj2.getY() && obj.getActive() && obj2.getActive()) return true;
 	else return false;
 }
 
