@@ -24,7 +24,7 @@ protected:
 	void checkBulletEnemyCollisions();
 	void checkPlayerEnemyCollisions();
 	void checkBulletPlayerCollisions();
-	bool checkCollisionGameObjects(GameObject& obj, GameObject& obj2);
+	bool checkCollisionGameObjects(GameObject& obj, GameObject& obj2, int range = 0);
 
 
 
