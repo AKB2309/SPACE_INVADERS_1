@@ -5,14 +5,24 @@
 #include "ConsoleArea.h"
 #include <vector>
 #include <memory>
+#include "visualization.h"
 
-
-class Game 
+class Game
 {
- protected:
+protected:
 
 	Player player;
 	bool running;
+	int score;
+	int level;
+	std::string status;
+
+	void checkBulletEnemyCollisions();
+	void checkPlayerEnemyCollisions();
+	void checkBulletPlayerCollisions();
+	bool checkCollisionGameObjects(GameObject& obj, GameObject& obj2);
+
+
 
 	std::vector<GameObject*> bullets;
 
@@ -23,7 +33,7 @@ class Game
 	void render();
 
 
- public:
+public:
 
 	Game();
 	~Game();

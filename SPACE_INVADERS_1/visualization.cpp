@@ -16,3 +16,11 @@ void draw_char(char ch, int y, int x, COLORS foreground_color, COLORS background
     SMALL_RECT screen_pos = { x, y, x + 1, y + 1 };
     ::WriteConsoleOutput(hConsoleOutput, &ch_info, buf_size, buf_coord, &screen_pos);
 }
+
+void draw_text(const std::string& text, int x, int y, COLORS color)
+{
+    for (int i = 0; i < text.length(); i++)
+    {
+        draw_char(text[i], y, x + i, color, BLACK);
+    }
+}
