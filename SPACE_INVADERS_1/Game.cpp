@@ -161,10 +161,13 @@ Game::Game() : running(true), player(30, 15), score(0), level(1)
 
 Game::~Game()
 {
-	bullets.clear();
-	enemies.clear();
+	for (auto bullet : bullets) {
+		delete bullet;
+	}
+	for (auto enemy : enemies) {
+		delete enemy;
+	}
 }
-
 void Game::run()
 {
 	initializeEnemies();
