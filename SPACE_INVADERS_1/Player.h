@@ -4,7 +4,7 @@
 #include "Bullet.h"
 #include <iostream>
 
-const int COOLDOWN = 0;
+const int COOLDOWN = 3;
 
 class Player : public GameObject {
 

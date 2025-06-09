@@ -175,7 +175,7 @@ void Game::run()
 		checkCollisions();
 		update();
 		render();
-		Sleep(70);
+		Sleep(41);
 		checkCollisions();
 	}
 	status = (enemies.size() == 0 ? "YOU WIN" : "GAME OVER");
