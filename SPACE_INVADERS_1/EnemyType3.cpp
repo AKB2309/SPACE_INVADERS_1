@@ -1,7 +1,7 @@
 #include "EnemyType3.h"
 #include <cstdlib>
 
-EnemyType3::EnemyType3(int x, int y) : Enemy(x, y, '&', GREEN, 1, 30) {} // direction = 1, points = 30
+EnemyType3::EnemyType3(int x, int y) : Enemy(x, y, '&', GREEN, 3, 30) {} // direction = 1, points = 30
 
 std::unique_ptr<Bullet> EnemyType3::tryShoot() {
     if (rand() % 40 == 0)

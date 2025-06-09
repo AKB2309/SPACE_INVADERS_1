@@ -66,23 +66,20 @@ void Game::update()
 	for (auto& bullet : bullets) {
 		bullet->update();
 	}
+	for (auto enemy : enemies) {
+		enemy->update();
+
+		if (auto bullet = enemy->tryShoot())
+		{
+			bullets.push_back(bullet.release());
+		}
+	}
 	for (auto bullet = bullets.begin(); bullet != bullets.end(); ) {
 		if (!(*bullet)->getActive()) {
 			bullet = bullets.erase(bullet);
 		}
 		else {
 			bullet++;
-		}
-	}
-}
-	}	
-
-	for (auto enemy : enemies) {
-		enemy->update();
-
-		if (auto bullet = enemy->tryShoot()) 
-		{
-			bullets.push_back(bullet.release());
 		}
 	}
 }

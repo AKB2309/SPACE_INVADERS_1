@@ -1,7 +1,7 @@
 #include "EnemyType4.h"
 #include <cstdlib>
 
-EnemyType4::EnemyType4(int x, int y) : Enemy(x, y, '$', PURPLE, 0, 40) {} // points = 40
+EnemyType4::EnemyType4(int x, int y) : Enemy(x, y, '$', PURPLE, 4, 40) {} // direction = 4, points = 40
 
 std::unique_ptr<Bullet> EnemyType4::tryShoot() {
     if (rand() % 25 == 0) 

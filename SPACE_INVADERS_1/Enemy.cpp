@@ -23,7 +23,7 @@ int Enemy::getDirection() const {
     return direction;
 }
 void Enemy::setDirection(int dir) {
-    if (dir == 1) direction = dir;
+    if (dir >= 1) direction = dir;
 }
 
 int Enemy::getPoints() const {
