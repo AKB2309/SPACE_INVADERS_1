@@ -1,6 +1,10 @@
 #pragma once
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemyType1.h"
+#include "EnemyType2.h"
+#include "EnemyType3.h"
+#include "EnemyType4.h"
 #include "Bullet.h"
 #include "ConsoleArea.h"
 #include <vector>
@@ -25,6 +29,7 @@ protected:
 
 
 	std::vector<GameObject*> bullets;
+	std::vector<Enemy*> enemies;
 
 	void initializeEnemies();
 	void input();
