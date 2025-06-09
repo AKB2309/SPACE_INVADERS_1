@@ -2,10 +2,7 @@
 
 Bullet::Bullet(int x, int y, int dir, COLORS color, char symbol, bool isPlayerBullet) : GameObject(x, y, symbol, color), direction(dir), isPlayerBullet(isPlayerBullet)
 {
-	if (dir != 1 && dir != -1)
-	{
-		//exception
-	}
+	
 }
 
 Bullet::Bullet(const Bullet& obj) : GameObject(obj), direction(obj.direction), isPlayerBullet(obj.isPlayerBullet)

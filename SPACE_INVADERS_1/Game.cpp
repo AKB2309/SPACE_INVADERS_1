@@ -161,10 +161,13 @@ Game::Game() : running(true), player(30, 15), score(0), level(1)
 
 Game::~Game()
 {
-	bullets.clear();
-	enemies.clear();
+	for (auto bullet : bullets) {
+		delete bullet;
+	}
+	for (auto enemy : enemies) {
+		delete enemy;
+	}
 }
-
 void Game::run()
 {
 	initializeEnemies();
@@ -175,7 +178,7 @@ void Game::run()
 		checkCollisions();
 		update();
 		render();
-		Sleep(70);
+		Sleep(41);
 		checkCollisions();
 	}
 	status = (enemies.size() == 0 ? "YOU WIN" : "GAME OVER");
