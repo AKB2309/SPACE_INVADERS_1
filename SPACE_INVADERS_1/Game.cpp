@@ -16,9 +16,7 @@ void Game::checkBulletPlayerCollisions()
 			player.setLives(player.getLives() - 1);
 			bullet->setActive(false);
 
-			if (player.getLives() <= 0) {
-				running = false;
-			}
+			
 		}
 	}
 }
@@ -67,6 +65,9 @@ void Game::update()
 			bullet++;
 		}
 	}
+	if (player.getLives() <= 0) {
+		running = false;
+	}
 }
 
 void Game::checkCollisions()
@@ -74,8 +75,6 @@ void Game::checkCollisions()
 	checkBulletEnemyCollisions();
 	checkBulletPlayerCollisions();
 	checkPlayerEnemyCollisions();
-
-
 }
 
 void Game::render()
