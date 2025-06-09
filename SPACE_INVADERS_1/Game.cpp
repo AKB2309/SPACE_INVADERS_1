@@ -4,6 +4,26 @@ using namespace std;
 
 void Game::checkBulletEnemyCollisions()
 {
+	
+	for (auto& enemy: enemies)
+	{
+		for (auto& bullet : bullets)
+		{
+			Bullet& bulletCast = dynamic_cast<Bullet&>(*bullet);
+			if (bulletCast.getIsPlayerBullet()) {
+
+				if (checkCollisionGameObjects(*bullet, *enemy))
+				{
+					bullet->setActive(false);
+					enemy->setActive(false);
+					score += enemy->getPoints();
+					updateLevel();
+					break;
+				}
+			}
+		}
+		
+	}
 }
 
 void Game::checkPlayerEnemyCollisions()
@@ -13,7 +33,8 @@ void Game::checkPlayerEnemyCollisions()
 void Game::checkBulletPlayerCollisions()
 {
 	for (auto& bullet : bullets) {
-		if (checkCollisionGameObjects(*bullet, player)) {
+		Bullet& bulletCast = dynamic_cast<Bullet&>(*bullet);
+		if (!bulletCast.getIsPlayerBullet() && checkCollisionGameObjects(*bullet, player)) {
 
 			player.setLives(player.getLives() - 1);
 			bullet->setActive(false);
@@ -25,14 +46,23 @@ void Game::checkBulletPlayerCollisions()
 
 bool Game::checkCollisionGameObjects(GameObject& obj, GameObject& obj2)
 {
-	if (obj.getX() == obj2.getX() && obj.getY() == obj2.getY()) return true;
+	if (abs(obj.getX() - obj2.getX()) <= 1 &&
+		abs(obj.getY() - obj2.getY()) <= 1 && obj.getActive() && obj2.getActive()) return true;
 	else return false;
 }
 
 
+void Game::updateLevel()
+{
+	if (score >= 200 && score < 500) level = 2;
+	else if (score >= 500) level = 3;
+
+	if (score >= 300 && !player.getReceivedExtraLife()) player.setReceivedExtraLife(true);
+}
+
 void Game::initializeEnemies()
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		enemies.push_back(new EnemyType1(5 + i * 6, 2));
 		enemies.push_back(new EnemyType2(5 + i * 6, 4));
@@ -80,9 +110,19 @@ void Game::update()
 			bullet++;
 		}
 	}
-	if (player.getLives() <= 0) {
+	for (auto enemy = enemies.begin(); enemy != enemies.end(); ) {
+		if (!(*enemy)->getActive()) {
+			enemy = enemies.erase(enemy);
+		}
+		else {
+			enemy++;
+		}
+	}
+
+	if (player.getLives() <= 0 || enemies.size() == 0) {
 		running = false;
 	}
+	
 }
 
 void Game::checkCollisions()
@@ -99,7 +139,8 @@ void Game::render()
 
 	status = "SCORE: " + std::to_string(score) +
 		"   LIVES: " + std::to_string(player.getLives()) +
-		"   LEVEL: " + std::to_string(level);
+		"   LEVEL: " + std::to_string(level) +
+		"   ENEMIES: " + std::to_string(enemies.size());
 	draw_text(status, 0, POLE_ROWS - 1, YELLOW);
 
 
@@ -116,27 +157,28 @@ void Game::render()
 
 Game::Game() : running(true), player(30, 15), score(0), level(1)
 {
-	initializeEnemies();
 }
 
 Game::~Game()
 {
 	bullets.clear();
+	enemies.clear();
 }
 
 void Game::run()
 {
-	running = true;
+	initializeEnemies();
+
 	while (running) {
 
 		input();
 		checkCollisions();
 		update();
 		render();
-		Sleep(50);
+		Sleep(70);
 		checkCollisions();
 	}
-	status = "GAME OVER";
+	status = (enemies.size() == 0 ? "YOU WIN" : "GAME OVER");
 	draw_text(status, (POLE_COLS - status.length() + 1) / 2, POLE_ROWS / 2, YELLOW);
 }
 

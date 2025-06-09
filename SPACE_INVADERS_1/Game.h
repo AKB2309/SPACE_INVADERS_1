@@ -31,6 +31,7 @@ protected:
 	std::vector<GameObject*> bullets;
 	std::vector<Enemy*> enemies;
 
+	void updateLevel();
 	void initializeEnemies();
 	void input();
 	void update();

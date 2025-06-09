@@ -19,7 +19,7 @@ void Player::moveRight() {
 Bullet* Player::shoot() {
 	if (shootCooldown <= 0) {
 		shootCooldown = COOLDOWN;
-		return new Bullet(x, y-1, 1);
+		return new Bullet(x, y-1, -1, WHITE, '|', true);
 	}
 	else return nullptr;
 }
@@ -42,6 +42,17 @@ int Player::getScore() const {
 }
 void Player::setScore(int s) {
 	score = s;
+}
+
+bool Player::getReceivedExtraLife() const
+{
+	return receivedExtraLife;
+}
+
+void Player::setReceivedExtraLife(bool b)
+{
+	receivedExtraLife = b;
+	if (b)lives++;
 }
 
 

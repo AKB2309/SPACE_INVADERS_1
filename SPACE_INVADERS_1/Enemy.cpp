@@ -39,6 +39,8 @@ std::unique_ptr<Bullet> Enemy::tryShoot() {
 
 void Enemy::update() {
    x += direction;
+   if (direction < 0) x = max(0, x);
+   else x = min(POLE_COLS - 1, x);
 
     if (x <= 0 || x >= POLE_COLS - 1)
     {
