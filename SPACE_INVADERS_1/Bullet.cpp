@@ -45,6 +45,8 @@ void Bullet::update()
 	if (active)
 		y += direction; // enemies shoot downwards
 
+
+
 	if (y < 0 || y >= POLE_ROWS) active = false;
 }
 

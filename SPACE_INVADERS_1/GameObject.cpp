@@ -1,10 +1,10 @@
 #include "GameObject.h"
 
-GameObject::GameObject(int x, int y, char symbol, COLORS color) : x(x), y(y), symbol(symbol), color(color)
+GameObject::GameObject(int x, int y, char symbol, COLORS color, bool active) : x(x), y(y), symbol(symbol), color(color), active(active)
 {
 }
 
-GameObject::GameObject(const GameObject& obj) :x(obj.x), y(obj.y), symbol(obj.symbol), color(obj.color)
+GameObject::GameObject(const GameObject& obj) :x(obj.x), y(obj.y), symbol(obj.symbol), color(obj.color), active(obj.active)
 {
 }
 
@@ -25,7 +25,7 @@ GameObject& GameObject::operator=(const GameObject& obj)
 		symbol = obj.symbol;
 		color = obj.color;
 	}
-	
+
 	return *this;
 	// TODO: insert return statement here
 }
@@ -73,6 +73,11 @@ void GameObject::setColor(COLORS newColor)
 bool GameObject::getActive() const
 {
 	return active;
+}
+
+void GameObject::setActive(bool active)
+{
+	this->active = active;
 }
 
 void GameObject::update()
