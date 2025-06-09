@@ -21,6 +21,6 @@ void draw_text(const std::string& text, int x, int y, COLORS color)
 {
     for (int i = 0; i < text.length(); i++)
     {
-        draw_char(text[i], y, x+i, color, BLACK);
+        draw_char(text[i], y, x + i, color, BLACK);
     }
 }

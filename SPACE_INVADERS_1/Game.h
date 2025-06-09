@@ -1,15 +1,19 @@
 #pragma once
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemyType1.h"
+#include "EnemyType2.h"
+#include "EnemyType3.h"
+#include "EnemyType4.h"
 #include "Bullet.h"
 #include "ConsoleArea.h"
 #include <vector>
 #include <memory>
 #include "visualization.h"
 
-class Game 
+class Game
 {
- protected:
+protected:
 
 	Player player;
 	bool running;
@@ -21,11 +25,13 @@ class Game
 	void checkPlayerEnemyCollisions();
 	void checkBulletPlayerCollisions();
 	bool checkCollisionGameObjects(GameObject& obj, GameObject& obj2);
-	
+
 
 
 	std::vector<GameObject*> bullets;
+	std::vector<Enemy*> enemies;
 
+	void updateLevel();
 	void initializeEnemies();
 	void input();
 	void update();
@@ -33,7 +39,7 @@ class Game
 	void render();
 
 
- public:
+public:
 
 	Game();
 	~Game();

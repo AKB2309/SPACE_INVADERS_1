@@ -3,6 +3,7 @@
 #include <iostream>
 #include <windows.h>
 #include <utility>
+
 class GameObject
 {
 protected:
@@ -12,7 +13,7 @@ protected:
 	COLORS color;
 
 public:
-	GameObject(int x = 0, int y = 0, char symbol = ' ', COLORS color = WHITE,bool active = true);	
+	GameObject(int x = 0, int y = 0, char symbol = ' ', COLORS color = WHITE, bool active = true);
 	GameObject(const GameObject& obj);
 	GameObject(GameObject&& obj) noexcept;
 	virtual ~GameObject() = default;
@@ -36,7 +37,5 @@ public:
 
 	virtual void update();
 	virtual void render() const;
-
-
 };
 

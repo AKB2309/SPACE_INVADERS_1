@@ -1,14 +1,11 @@
 #include "Bullet.h"
 
-Bullet::Bullet(int x, int y, int dir, COLORS color, char symbol) : GameObject(x, y, symbol, color), direction(dir)
+Bullet::Bullet(int x, int y, int dir, COLORS color, char symbol, bool isPlayerBullet) : GameObject(x, y, symbol, color), direction(dir), isPlayerBullet(isPlayerBullet)
 {
-	if (dir != 1 && dir != -1)
-	{
-		//exception
-	}
+	
 }
 
-Bullet::Bullet(const Bullet& obj) : GameObject(obj), direction(obj.direction)
+Bullet::Bullet(const Bullet& obj) : GameObject(obj), direction(obj.direction), isPlayerBullet(obj.isPlayerBullet)
 {
 }
 
@@ -39,13 +36,18 @@ void Bullet::setDirection(int d)
 	direction = d;
 }
 
+bool Bullet::getIsPlayerBullet() const
+{
+	return isPlayerBullet;
+}
+
 
 void Bullet::update()
 {
 	if (active)
-		y -= direction;
-	
-	
+		y += direction; // enemies shoot downwards
+
+
 
 	if (y < 0 || y >= POLE_ROWS) active = false;
 }

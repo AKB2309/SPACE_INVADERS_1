@@ -25,7 +25,7 @@ GameObject& GameObject::operator=(const GameObject& obj)
 		symbol = obj.symbol;
 		color = obj.color;
 	}
-	
+
 	return *this;
 	// TODO: insert return statement here
 }

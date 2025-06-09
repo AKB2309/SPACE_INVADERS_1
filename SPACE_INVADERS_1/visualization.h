@@ -26,4 +26,4 @@ enum COLORS {
 };
 
 void draw_char(char ch, int y, int x, COLORS foreground_color, COLORS background_color);
-void draw_text( const std::string& text, int x, int y, COLORS color);
+void draw_text(const std::string& text, int x, int y, COLORS color);

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int x, int y, char symbol, COLORS color) : GameObject(x,y,symbol,color), lives(3),score(0){ }
+Player::Player(int x, int y, char symbol, COLORS color) : GameObject(x, y, symbol, color), lives(3), score(0) { }
 Player::Player(const Player& obj) : GameObject(obj), lives(obj.lives), score(obj.score) {}
 //Player::Player(Player&& obj) {}
 Player::~Player() {}
@@ -19,7 +19,7 @@ void Player::moveRight() {
 Bullet* Player::shoot() {
 	if (shootCooldown <= 0) {
 		shootCooldown = COOLDOWN;
-		return new Bullet(x, y, 1);
+		return new Bullet(x, y-1, -1, WHITE, '|', true);
 	}
 	else return nullptr;
 }
@@ -27,7 +27,7 @@ Bullet* Player::shoot() {
 void Player::handleInput()
 {
 	if (GetAsyncKeyState(VK_LEFT)) moveLeft();
-	if(GetAsyncKeyState(VK_RIGHT)) moveRight();
+	if (GetAsyncKeyState(VK_RIGHT)) moveRight();
 }
 
 int Player::getLives() const {
@@ -44,8 +44,19 @@ void Player::setScore(int s) {
 	score = s;
 }
 
+bool Player::getReceivedExtraLife() const
+{
+	return receivedExtraLife;
+}
 
-Player& Player::operator+(){
+void Player::setReceivedExtraLife(bool b)
+{
+	receivedExtraLife = b;
+	if (b)lives++;
+}
+
+
+Player& Player::operator+() {
 	return *this;
 }
 Player& Player::operator-() {

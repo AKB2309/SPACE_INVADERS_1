@@ -1,7 +1,29 @@
 #include "Game.h"
+#include <iostream>
+using namespace std;
 
 void Game::checkBulletEnemyCollisions()
 {
+	
+	for (auto& enemy: enemies)
+	{
+		for (auto& bullet : bullets)
+		{
+			Bullet& bulletCast = dynamic_cast<Bullet&>(*bullet);
+			if (bulletCast.getIsPlayerBullet()) {
+
+				if (checkCollisionGameObjects(*bullet, *enemy))
+				{
+					bullet->setActive(false);
+					enemy->setActive(false);
+					score += enemy->getPoints();
+					updateLevel();
+					break;
+				}
+			}
+		}
+		
+	}
 }
 
 void Game::checkPlayerEnemyCollisions()
@@ -11,41 +33,53 @@ void Game::checkPlayerEnemyCollisions()
 void Game::checkBulletPlayerCollisions()
 {
 	for (auto& bullet : bullets) {
-			if (checkCollisionGameObjects(*bullet, player)) {
+		Bullet& bulletCast = dynamic_cast<Bullet&>(*bullet);
+		if (!bulletCast.getIsPlayerBullet() && checkCollisionGameObjects(*bullet, player)) {
 
-				player.setLives(player.getLives()-1);
-				bullet->setActive(false);
+			player.setLives(player.getLives() - 1);
+			bullet->setActive(false);
 
-				if (player.getLives() <= 0) {
-					running = false;
-				}
-			}		
+			
+		}
 	}
 }
 
 bool Game::checkCollisionGameObjects(GameObject& obj, GameObject& obj2)
 {
-	if (obj.getX() == obj2.getX() && obj.getY() == obj2.getY()) return true;
+	if (abs(obj.getX() - obj2.getX()) <= 1 &&
+		abs(obj.getY() - obj2.getY()) <= 1 && obj.getActive() && obj2.getActive()) return true;
 	else return false;
 }
 
 
-void Game::initializeEnemies()
+void Game::updateLevel()
 {
+	if (score >= 200 && score < 500) level = 2;
+	else if (score >= 500) level = 3;
+
+	if (score >= 300 && !player.getReceivedExtraLife()) player.setReceivedExtraLife(true);
 }
 
+void Game::initializeEnemies()
+{
+	for (int i = 0; i < 7; i++)
+	{
+		enemies.push_back(new EnemyType4(5 + i * 6, 2));
+		enemies.push_back(new EnemyType3(5 + i * 6, 4));
+		enemies.push_back(new EnemyType2(5 + i * 6, 6));
+		enemies.push_back(new EnemyType1(5 + i * 6, 8));
+	}
+}
 
 void Game::input()
 {
-	player.handleInput(); 
+	player.handleInput();
 	if (GetAsyncKeyState(VK_SPACE)) {
 		Bullet* newBullet = player.shoot();
 		if (newBullet != nullptr) {
 			bullets.push_back(newBullet);
 		}
 	}
-
-
 
 	if (GetAsyncKeyState(VK_ESCAPE)) {
 		running = false;
@@ -56,8 +90,17 @@ void Game::update()
 {
 	player.update();
 
+	// player bullets
 	for (auto& bullet : bullets) {
 		bullet->update();
+	}
+	for (auto enemy : enemies) {
+		enemy->update();
+
+		if (auto bullet = enemy->tryShoot())
+		{
+			bullets.push_back(bullet.release());
+		}
 	}
 	for (auto bullet = bullets.begin(); bullet != bullets.end(); ) {
 		if (!(*bullet)->getActive()) {
@@ -67,6 +110,19 @@ void Game::update()
 			bullet++;
 		}
 	}
+	for (auto enemy = enemies.begin(); enemy != enemies.end(); ) {
+		if (!(*enemy)->getActive()) {
+			enemy = enemies.erase(enemy);
+		}
+		else {
+			enemy++;
+		}
+	}
+
+	if (player.getLives() <= 0 || enemies.size() == 0) {
+		running = false;
+	}
+	
 }
 
 void Game::checkCollisions()
@@ -74,8 +130,6 @@ void Game::checkCollisions()
 	checkBulletEnemyCollisions();
 	checkBulletPlayerCollisions();
 	checkPlayerEnemyCollisions();
-
-
 }
 
 void Game::render()
@@ -85,14 +139,19 @@ void Game::render()
 
 	status = "SCORE: " + std::to_string(score) +
 		"   LIVES: " + std::to_string(player.getLives()) +
-		"   LEVEL: " + std::to_string(level);
-	draw_text(status, 0, POLE_ROWS-1, YELLOW);
-	
-	
+		"   LEVEL: " + std::to_string(level) +
+		"   ENEMIES: " + std::to_string(enemies.size());
+	draw_text(status, 0, POLE_ROWS - 1, YELLOW);
+
+
 	player.render();
 
 	for (auto bullet : bullets) {
 		bullet->render();
+	}
+
+	for (auto enemy : enemies) {
+		enemy->render(); // calls the type of enemy
 	}
 }
 
@@ -102,22 +161,28 @@ Game::Game() : running(true), player(30, 15), score(0), level(1)
 
 Game::~Game()
 {
-	bullets.clear();
+	for (auto bullet : bullets) {
+		delete bullet;
+	}
+	for (auto enemy : enemies) {
+		delete enemy;
+	}
 }
-
 void Game::run()
 {
-	running = true;
+	initializeEnemies();
+
 	while (running) {
 
-		input();		
+		input();
 		checkCollisions();
 		update();
 		render();
-		Sleep(50);
+		Sleep(41);
+		checkCollisions();
 	}
-	status = "GAME OVER";
-	draw_text(status, (POLE_COLS-status.length()+1)/2, POLE_ROWS / 2, YELLOW);
+	status = (enemies.size() == 0 ? "YOU WIN" : "GAME OVER");
+	draw_text(status, (POLE_COLS - status.length() + 1) / 2, POLE_ROWS / 2, YELLOW);
 }
 
 
