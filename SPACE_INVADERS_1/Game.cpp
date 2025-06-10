@@ -189,7 +189,7 @@ void Game::run()
 		update();
 		checkCollisions();
 		render();
-		Sleep(41);
+		Sleep(40);
 	}
 	status = (enemies.size() == 0 ? "YOU WIN" : "GAME OVER");
 	draw_text(status, (POLE_COLS - status.length() + 1) / 2, POLE_ROWS / 2, YELLOW);

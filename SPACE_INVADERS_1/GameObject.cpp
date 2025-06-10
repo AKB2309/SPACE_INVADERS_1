@@ -11,7 +11,8 @@ GameObject::GameObject(const GameObject& obj) :x(obj.x), y(obj.y), symbol(obj.sy
 GameObject::GameObject(GameObject&& obj) noexcept : x(std::exchange(obj.x, 0)),
 y(std::exchange(obj.y, 0)),
 symbol(std::exchange(obj.symbol, ' ')),
-color(std::exchange(obj.color, WHITE))
+color(std::exchange(obj.color, BLACK)),
+active(std::exchange(obj.active, true))
 {
 }
 
@@ -27,7 +28,6 @@ GameObject& GameObject::operator=(const GameObject& obj)
 	}
 
 	return *this;
-	// TODO: insert return statement here
 }
 
 int GameObject::getX() const

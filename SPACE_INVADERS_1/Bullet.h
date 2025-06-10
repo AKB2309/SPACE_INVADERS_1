@@ -9,7 +9,7 @@ protected:
 public:
 	Bullet(int x = 0, int y = 0, int dir = 1, COLORS color = WHITE, char symbol = '|', bool isPlayerBullet = false);
 	Bullet(const Bullet& obj);
-	//Bullet(Bullet&& obj);
+	Bullet(Bullet&& obj) noexcept;
 
 	~Bullet();
 

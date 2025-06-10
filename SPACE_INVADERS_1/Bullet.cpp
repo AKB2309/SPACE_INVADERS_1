@@ -5,13 +5,15 @@ Bullet::Bullet(int x, int y, int dir, COLORS color, char symbol, bool isPlayerBu
 	
 }
 
-Bullet::Bullet(const Bullet& obj) : GameObject(obj), direction(obj.direction), isPlayerBullet(obj.isPlayerBullet)
+Bullet::Bullet(const Bullet& obj) : GameObject(std::move(obj)), direction(obj.direction), isPlayerBullet(obj.isPlayerBullet)
 {
 }
 
-//Bullet::Bullet(Bullet&& obj)
-//{
-//}
+Bullet::Bullet(Bullet&& obj) noexcept : GameObject(std::move(obj)),
+direction(std::exchange(obj.direction, 0)),
+isPlayerBullet(std::exchange(obj.isPlayerBullet, false))
+{
+}
 
 Bullet::~Bullet()
 {

@@ -4,9 +4,15 @@ Enemy::Enemy(int x, int y, char symbol, COLORS color, int dir, int pts, int sp, 
 
 Enemy::Enemy(const Enemy& obj) : GameObject(obj), direction(obj.direction), points(obj.points), speed(obj.speed), shootProbability(obj.shootProbability), level(obj.level) {}
 
-//Enemy::Enemy(Enemy&& obj) noexcept {
-//
-//}
+Enemy::Enemy(Enemy&& obj) noexcept : GameObject(std::move(obj)),
+direction(std::exchange(obj.direction, 0)),
+points(std::exchange(obj.points, 0)),
+speed(std::exchange(obj.speed,0)),
+shootProbability(std::exchange(obj.shootProbability, 0)),
+level(std::exchange(obj.level, 0))
+
+{
+}
 
 Enemy::~Enemy() {}
 

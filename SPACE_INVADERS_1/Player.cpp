@@ -2,7 +2,8 @@
 
 Player::Player(int x, int y, char symbol, COLORS color) : GameObject(x, y, symbol, color), lives(3), score(0) { }
 Player::Player(const Player& obj) : GameObject(obj), lives(obj.lives), score(obj.score) {}
-//Player::Player(Player&& obj) {}
+Player::Player(Player&& obj) noexcept : GameObject(std::move(obj)), lives(std::exchange(obj.lives, 0)), score(std::exchange(obj.score, 0))
+{}
 Player::~Player() {}
 
 Player& Player::operator=(const Player& obj) {

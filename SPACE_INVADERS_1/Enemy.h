@@ -14,7 +14,7 @@ protected:
 public:
 	Enemy(int x, int y, char symbol, COLORS color, int dir, int pts, int sp, int shootPr, int lev);
 	Enemy(const Enemy& obj);
-	//Enemy(Enemy&& obj) noexcept;
+	Enemy(Enemy&& obj) noexcept;
 	virtual ~Enemy();
 
 	Enemy& operator=(const Enemy& obj);

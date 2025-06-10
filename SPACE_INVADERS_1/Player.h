@@ -17,7 +17,7 @@ protected:
 public:
 	Player(int x = 0, int y = 0, char symbol = '^', COLORS color = GREEN);
 	Player(const Player& obj);
-	//Player(Player&& obj);
+	Player(Player&& obj) noexcept;
 	~Player();
 
 	Player& operator=(const Player& obj);
