@@ -38,8 +38,10 @@ public:
 	void setReceivedExtraLife(bool b);
 
 
-	Player& operator+();
-	Player& operator-();
+	Player& operator+=(int points);  // Add points
+	Player& operator-=(int points);  // Subtract points
+	friend Player operator+(Player lhs, int points);
+	friend Player operator-(Player lhs, int points);
 
 	void update() override;
 };

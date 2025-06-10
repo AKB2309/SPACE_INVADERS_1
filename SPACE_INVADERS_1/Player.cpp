@@ -62,17 +62,36 @@ void Player::setReceivedExtraLife(bool b)
 	if (b)lives++;
 }
 
+Player& Player::operator+=(int points)
+{
+	score += points;
+	return *this;
+}
 
-Player& Player::operator+() {
+Player& Player::operator-=(int points)
+{
+	*this += -points;
 	return *this;
 }
-Player& Player::operator-() {
-	return *this;
-}
+
+
+
 
 void Player::update()
 {
 	if (shootCooldown > 0) {
 		shootCooldown--;
 	}
+}
+
+Player operator+(Player player, int points)
+{
+	player += points;
+	return player;
+}
+
+Player operator-(Player player, int points)
+{
+	player -= points;
+	return player;
 }

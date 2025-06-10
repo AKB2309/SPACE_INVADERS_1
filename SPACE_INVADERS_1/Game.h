@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include <iostream>
 #include "Player.h"
 #include "Enemy.h"
 #include "EnemyType1.h"
@@ -7,8 +9,6 @@
 #include "EnemyType4.h"
 #include "Bullet.h"
 #include "ConsoleArea.h"
-#include <vector>
-#include <memory>
 #include "visualization.h"
 
 class Game

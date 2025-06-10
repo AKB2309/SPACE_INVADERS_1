@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <iostream>
 using namespace std;
 
 void Game::checkBulletEnemyCollisions()
@@ -16,7 +15,7 @@ void Game::checkBulletEnemyCollisions()
 				{
 					bullet->setActive(false);
 					enemy->setActive(false);
-					score += enemy->getPoints();
+					player += enemy->getPoints();
 					updateLevel();
 					break;
 				}
@@ -54,13 +53,14 @@ void Game::checkBulletPlayerCollisions()
 bool Game::checkCollisionGameObjects(GameObject& obj, GameObject& obj2, int range)
 {
 	if (abs(obj.getX() - obj2.getX()) <= range &&
-		abs(obj.getY() - obj2.getY()) <= range && obj2.getActive()) return true;
+		obj.getY() == obj2.getY() && obj2.getActive()) return true;
 	else return false;
 }
 
 
 void Game::updateLevel()
 {
+	score = player.getScore();
 	if (score >= 200 && score < 500) level = 2;
 	else if (score >= 500) level = 3;
 
@@ -158,7 +158,7 @@ void Game::render()
 
 	system("cls");
 
-	status = "SCORE: " + std::to_string(score) +
+	status = "SCORE: " + std::to_string(player.getScore()) +
 		"   LIVES: " + std::to_string(player.getLives()) +
 		"   LEVEL: " + std::to_string(level) +
 		"   ENEMIES: " + std::to_string(enemies.size());
@@ -191,6 +191,7 @@ Game::~Game()
 }
 void Game::run()
 {
+	ConsoleArea::LockConsoleSize(POLE_COLS, POLE_ROWS);
 	initializeEnemies();
 
 	while (running) {
