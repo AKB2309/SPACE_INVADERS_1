@@ -111,7 +111,6 @@ void Game::update()
 		}
 	}
 	
-	checkCollisions();	
 
 	for (auto bullet = bullets.begin(); bullet != bullets.end(); ) {
 		if (!(*bullet)->getActive()) {
