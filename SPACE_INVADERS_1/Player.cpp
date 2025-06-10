@@ -6,6 +6,12 @@ Player::Player(const Player& obj) : GameObject(obj), lives(obj.lives), score(obj
 Player::~Player() {}
 
 Player& Player::operator=(const Player& obj) {
+	if (this != &obj) 
+	{
+		GameObject::operator=(obj);
+		lives = obj.lives;
+		score = obj.score;
+	}
 	return *this;
 }
 void Player::moveLeft() {

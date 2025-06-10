@@ -1,20 +1,12 @@
 #include "EnemyType4.h"
 #include <cstdlib>
 
-EnemyType4::EnemyType4(int x, int y) : Enemy(x, y, '$', PURPLE, 4, 40) {} // direction = 4, points = 40
+EnemyType4::EnemyType4(int x, int y) : Enemy(x, y, '$', PURPLE, 1, 40, 1, 40, 1) {} // points = 40
 
 std::unique_ptr<Bullet> EnemyType4::tryShoot() {
-    if (rand() % 25 == 0) 
-    {
-        return std::make_unique<Bullet>(x, y + 1, 1, PURPLE, '|');
-    }
-    return nullptr;
+    return Enemy::tryShoot();
 }
 
-void EnemyType4::update() {
-    Enemy::update();
-
-    if (rand() % 100 < 5) {
-        direction = (rand() % 2) ? 2 : -2;
-    }   
+void EnemyType4::update(int playerY) {
+    Enemy::update(playerY);
 }

@@ -28,6 +28,15 @@ void Game::checkBulletEnemyCollisions()
 
 void Game::checkPlayerEnemyCollisions()
 {
+	for (auto& enemy : enemies)
+	{
+		// Check if enemy reached or passed player's Y position and is close enough horizontally
+		if (enemy->getY() >= player.getY() && abs(enemy->getX() - player.getX()) <= 1)
+		{
+			running = false; // end the game if an enemy reaches the player
+			return;
+		}
+	}
 }
 
 void Game::checkBulletPlayerCollisions()
@@ -37,9 +46,7 @@ void Game::checkBulletPlayerCollisions()
 		if (!bulletCast.getIsPlayerBullet() && checkCollisionGameObjects(*bullet, player)) {
 
 			player.setLives(player.getLives() - 1);
-			bullet->setActive(false);
-
-			
+			bullet->setActive(false);			
 		}
 	}
 }
@@ -90,18 +97,22 @@ void Game::update()
 {
 	player.update();
 
-	// player bullets
 	for (auto& bullet : bullets) {
 		bullet->update();
 	}
+
 	for (auto enemy : enemies) {
-		enemy->update();
+		enemy->setLevel(level);
+		enemy->update(player.getY());
 
 		if (auto bullet = enemy->tryShoot())
 		{
 			bullets.push_back(bullet.release());
 		}
 	}
+	
+	checkCollisions();	
+
 	for (auto bullet = bullets.begin(); bullet != bullets.end(); ) {
 		if (!(*bullet)->getActive()) {
 			bullet = bullets.erase(bullet);
@@ -110,6 +121,7 @@ void Game::update()
 			bullet++;
 		}
 	}
+
 	for (auto enemy = enemies.begin(); enemy != enemies.end(); ) {
 		if (!(*enemy)->getActive()) {
 			enemy = enemies.erase(enemy);
@@ -122,7 +134,6 @@ void Game::update()
 	if (player.getLives() <= 0 || enemies.size() == 0) {
 		running = false;
 	}
-	
 }
 
 void Game::checkCollisions()
@@ -151,7 +162,7 @@ void Game::render()
 	}
 
 	for (auto enemy : enemies) {
-		enemy->render(); // calls the type of enemy
+		enemy->render();
 	}
 }
 
@@ -174,15 +185,12 @@ void Game::run()
 
 	while (running) {
 
-		input();
-		checkCollisions();
+		input();		
 		update();
+		checkCollisions();
 		render();
 		Sleep(41);
-		checkCollisions();
 	}
 	status = (enemies.size() == 0 ? "YOU WIN" : "GAME OVER");
 	draw_text(status, (POLE_COLS - status.length() + 1) / 2, POLE_ROWS / 2, YELLOW);
 }
-
-

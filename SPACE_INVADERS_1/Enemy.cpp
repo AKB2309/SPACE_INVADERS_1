@@ -1,8 +1,8 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int x, int y, char symbol, COLORS color, int dir, int pts) : GameObject(x, y, symbol, color), direction(dir), points(pts) {}
+Enemy::Enemy(int x, int y, char symbol, COLORS color, int dir, int pts, int sp, int shootPr, int lev) : GameObject(x, y, symbol, color), direction(dir), points(pts), speed(sp), shootProbability(shootPr), level(lev) {}
 
-Enemy::Enemy(const Enemy& obj) : GameObject(obj), direction(obj.direction), points(obj.points) {}
+Enemy::Enemy(const Enemy& obj) : GameObject(obj), direction(obj.direction), points(obj.points), speed(obj.speed), shootProbability(obj.shootProbability), level(obj.level) {}
 
 //Enemy::Enemy(Enemy&& obj) noexcept {
 //
@@ -12,9 +12,12 @@ Enemy::~Enemy() {}
 
 Enemy& Enemy::operator=(const Enemy& obj) {
     if (this != &obj) { 
-        GameObject::operator=(obj); //copies x, y, symbol, color
+        GameObject::operator=(obj);
         direction = obj.direction;
         points = obj.points;
+        speed = obj.speed;
+        shootProbability = obj.shootProbability;
+        level = obj.level;
     }
     return *this;
 }
@@ -33,19 +36,61 @@ void Enemy::setPoints(int pts) {
     points = pts;
 }
 
-std::unique_ptr<Bullet> Enemy::tryShoot() {
-    return nullptr; // Base enemies don't shoot by default
+int Enemy::getSpeed() const {
+    return speed;
+}
+void Enemy::setSpeed(int sp) {
+    speed = sp;
 }
 
-void Enemy::update() {
-   x += direction;
-   if (direction < 0) x = max(0, x);
-   else x = min(POLE_COLS - 1, x);
+int Enemy::getShootProbability() const {
+    return shootProbability;
+}
+void Enemy::setShootProbability(int shoots) {
+    shootProbability = shoots;
+}
 
-    if (x <= 0 || x >= POLE_COLS - 1)
-    {
-        direction *= -1;
+int Enemy::getLevel() const {
+    return level;
+}
+
+void Enemy::setLevel(int lev) {
+    level = lev;
+    switch (lev) {
+    case 1:
+        speed = 1;
+        shootProbability = 40;
+        break;
+    case 2:
+        speed = 2;
+        shootProbability = 20;
+        break;
+    case 3:
+        speed = 3;
+        shootProbability = 10;
+        break;
     }
+}
+
+std::unique_ptr<Bullet> Enemy::tryShoot() {
+    if (rand() % shootProbability == 0)    {         
+        int bulletSpeed = 1 + (40 / shootProbability) / 2;
+        return std::make_unique<Bullet>(x, y + 1, bulletSpeed, color, '|');
+    }
+    return nullptr;
+}
+
+void Enemy::update(int playerY) { 
+    int newX = x + direction * speed;
+
+    if (newX < 0 || newX > POLE_COLS - 1) 
+    {
+        direction *= -1; // hit wall - reverse direction 
+        y++;  // move down
+        
+        if (y > playerY) y = playerY; // don't go below player
+    }
+    else x = newX;    
 }
 
 void Enemy::render() const {
