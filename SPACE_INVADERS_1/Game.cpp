@@ -54,7 +54,7 @@ void Game::checkBulletPlayerCollisions()
 bool Game::checkCollisionGameObjects(GameObject& obj, GameObject& obj2, int range)
 {
 	if (abs(obj.getX() - obj2.getX()) <= range &&
-		obj.getY() == obj2.getY() && obj.getActive() && obj2.getActive()) return true;
+		abs(obj.getY() - obj2.getY()) <= range && obj2.getActive()) return true;
 	else return false;
 }
 
@@ -89,7 +89,18 @@ void Game::input()
 	}
 
 	if (GetAsyncKeyState(VK_ESCAPE)) {
-		running = false;
+		bool pause = true;
+		while (pause)
+		{
+			status = "PAUSE";
+			draw_text(status, (POLE_COLS - status.length() + 1) / 2, POLE_ROWS / 2, YELLOW);
+
+			Sleep(100);
+			if (GetAsyncKeyState(VK_ESCAPE))
+			{
+				pause = false;
+			}
+		}
 	}
 }
 
