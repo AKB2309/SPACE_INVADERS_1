@@ -24,3 +24,17 @@ void draw_text(const std::string& text, int x, int y, COLORS color)
         draw_char(text[i], y, x + i, color, BLACK);
     }
 }
+
+void LockConsoleSize(int width, int height) {
+    HANDLE hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    COORD bufferSize = { static_cast<SHORT>(width), static_cast<SHORT>(height) };
+    SetConsoleScreenBufferSize(hConsoleOutput, bufferSize);
+
+    SMALL_RECT windowRect = { 0, 0, static_cast<SHORT>(width - 1), static_cast<SHORT>(height - 1) };
+    SetConsoleWindowInfo(hConsoleOutput, TRUE, &windowRect);
+
+    HWND consoleWindow = GetConsoleWindow();
+    SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_SIZEBOX);
+
+}

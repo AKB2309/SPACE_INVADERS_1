@@ -191,7 +191,7 @@ Game::~Game()
 }
 void Game::run()
 {
-	ConsoleArea::LockConsoleSize(POLE_COLS, POLE_ROWS);
+	LockConsoleSize(POLE_COLS, POLE_ROWS);
 	initializeEnemies();
 
 	while (running) {

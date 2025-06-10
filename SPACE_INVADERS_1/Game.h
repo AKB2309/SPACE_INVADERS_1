@@ -8,7 +8,6 @@
 #include "EnemyType3.h"
 #include "EnemyType4.h"
 #include "Bullet.h"
-#include "ConsoleArea.h"
 #include "visualization.h"
 
 class Game
